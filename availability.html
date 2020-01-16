@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+
+</head>
+<body>
+<div class="text-container">
+        <h3 class="app__main__title">Διαθεσιμότητα</h3>
+		<div id="datepicker-container">
+			<div></div>
+		  </div>
+        <br>
+        <div class="btn-group">
+         <button class="removeDate" style="background-color:#27B61A;">Διαθέσιμο&nbsp;<i class="fa fa-check" aria-hidden="true"></i></button>
+         <button class="addDate"  style="background-color:#C72E2E;">Μή Διαθέσιμο&nbsp;<i class="fa fa-times" aria-hidden="true"></i></button>
+        </div>
+    </div>
+
+<script>
+api.get("/excludeddate").done(function(excludedDates){
+    var excludedDates = excludedDates.data.map(function(a) {return a.date;});
+    console.log(excludedDates)
+
+    $('#datepicker-container div').datepicker({
+        format: "yyyy-mm-dd",
+        weekStart: 1,
+		language: "el",
+		maxViewMode: 1,
+    todayHighlight: true,
+        //datesDisabled: excludedDates,
+        toggleActive: true,
+        beforeShowDay: function(date) {
+            formattedDate = date.getFullYear()+'-'+('0'+(date.getMonth()+1)).slice(-2)+'-'+('0'+date.getDate()).slice(-2);
+                //console.log(formattedDate,excludedDates,$.inArray(formattedDate, excludedDates))
+                var search_index = $.inArray(formattedDate, excludedDates);
+
+                if (~$.inArray(formattedDate, excludedDates)) {
+                    return {classes: 'highlight', tooltip: 'Title'};
+                }
+        }
+    })
+})
+
+function getSelectedDateFormatted(){
+    date = $('#datepicker-container div').data('datepicker').getDate()
+        if (date == null) return
+        formattedDate = date.getFullYear()+'-'+('0'+(date.getMonth()+1)).slice(-2)+'-'+('0'+date.getDate()).slice(-2)
+   
+    return formattedDate
+}
+
+$('.addDate').on('click', function (e) {
+	e.preventDefault()
+	var data = {"date":getSelectedDateFormatted()}
+    api.post('/excludeddate', data).then(function(){
+		location.reload();
+	})
+    console.log(getSelectedDateFormatted())
+})
+
+$('.removeDate').on('click', function(e) {
+	e.preventDefault()
+    api.get('/excludeddate/delete/' + getSelectedDateFormatted()).then(function(){
+		location.reload();
+	})
+    console.log(getSelectedDateFormatted())
+})
+
+
+
+</script>
+     
+</body>
+</html>
+    

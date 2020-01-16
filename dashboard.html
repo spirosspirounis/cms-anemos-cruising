@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title>Aegean Blue | CMS</title>
+	<link rel="icon" type="image/png" href="images/fav-icon.png"/>
+	<link rel='stylesheet' href='css/style.min.css' />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/bootstrap-datepicker3.min.css">
+	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+	<script src="js/calendar-min.js"></script>
+	<script src="js/calendar.js"></script>
+	
+</head>
+<body>
+	<!-- navbar -->
+	<div class="navbar">
+		<nav class="nav__mobile"></nav>
+		<div class="container">
+			<div class="navbar__inner">
+				<a href="#" class="navbar__logo"><img style="width:90px;height:70px;margin-top:10px" src="images/logo.png" alt="Logo"></a>
+				<nav class="navbar__menu">
+					<ul>
+						<li><a class="logout" href="#">Logout</a></li>
+					</ul>
+				</nav>
+				<div class="navbar__menu-mob"><a href="" id='toggle'><svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z" class=""></path></svg></a></div>
+			</div>
+		</div>
+	</div>
+	<!-- Page content -->
+	<div class="app">
+		<div class="container">
+			<div class="app__inner">
+				<div class="app__menu">
+					<ul class="vMenu">
+						<li><a style="cursor:pointer;" class="availability_click">Διαθεσιμότητα</a></li>
+						<li><a style="cursor:pointer;"   class="blog_click">Άρθρα</a></li>
+					</ul>
+				</div>
+				<div class="app__main"></div>
+			</div>
+		</div>
+	</div>
+
+
+
+                  <!-- The Modal -->
+				  <div id="myModal" class="modal">
+						<div class="id" style="display:none;"></div>
+					<form id="blog" action="" method="post">
+						<span class="close">&times;</span>
+					  <h3>Προσθήκη νέου άρθρου</h3>
+					  <fieldset>
+						<input name="title" placeholder="Τίτλος" type="text" tabindex="1" required autofocus>
+					  </fieldset>
+					  <fieldset>
+						<input name="date" placeholder="Ημερομηνία" type="date" tabindex="2" required >
+					  </fieldset>
+					  <fieldset>
+						<textarea name="content" placeholder="Κείμενο...." tabindex="3"  required ></textarea>
+						</fieldset>
+						<fieldset>
+						 <input name="image" type="file" name="file-7[]" id="file-7" class="inputfile inputfile-6" data-multiple-caption="{count} files selected" multiple  />
+						 <label for="file-7"><span></span> <strong><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/></svg> Upload image&hellip;</strong></label>
+					</fieldset>
+					  <fieldset>
+						<button name="submit" type="submit" id="blog-submit" data-submit="...Loading">Καταχώρηση</button>
+					  </fieldset>
+					  </form>
+				 </div>
+		
+
+<script src="js/custom-file-input.js"></script>
+<script src='js/app.min.js'></script>
+<script src='js/api.js'></script>
+</body>
+</html>
