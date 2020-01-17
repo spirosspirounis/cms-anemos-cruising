@@ -115,7 +115,7 @@ function postBox(post,card){
     k.find(".card").css('background-image', 'url('+ post.image +')');
     k.find(".title").text(post.title)
     k.find(".date").text(post.createdAt)
-    k.find(".content").text(post.content)
+    k.find(".editor").text(post.content)
     $(".cards-wrapper").append(k);
     k.css("display","block");
     k.find(".id").text(post.id);
@@ -145,7 +145,7 @@ api.get("/post").done(showposts)
 //create post
 $("#blog" ).submit(function( event ) {
     event.preventDefault();
-    var credentials = {'title': $(this).find("input[name='title']").val(), 'date': $(this).find("input[name='date']").val(), 'content': $(this).find("textarea[name='content']").val(), 'image': $(this).find("input[name='image']").val()}
+    var credentials = {'title': $(this).find("input[name='title']").val(), 'date': $(this).find("input[name='date']").val(), 'editor': $(this).find("textarea[name='editor']").val(), 'image': $(this).find("input[name='image']").val()}
     if($("#myModal").find(".id").text() != ""){
     api.postImage('/post/' + $("#myModal").find(".id").text(), new FormData(this)).done(function(){
         location.reload();
@@ -167,11 +167,11 @@ $("#blog" ).submit(function( event ) {
     var date = $(this).closest(".card").find(".date").text()
     date = new Date(date);
     var date_string = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-    var content= $(this).closest(".card").find(".content").text()
+    var content= $(this).closest(".card").find(".editor").text()
     $("#myModal").find(".id").text(id);
     $("#myModal").find("input[name='title']").val(title)
     $("#myModal").find("input[name='date']").val(date_string)
-    $("#myModal").find("textarea[name='content']").val(content)
+    $("#myModal").find("textarea[name='editor']").val(content)
 })
 
 

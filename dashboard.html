@@ -4,6 +4,14 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<title>Aegean Blue | CMS</title>
+
+               	<!--for text editor-->
+	<link rel="stylesheet" type="text/css" href="https://necolas.github.io/normalize.css/latest/normalize.css">
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="dist/wysiwyg.css" />
+	<script type="text/javascript" src="wysiwyg.js"></script>
+								<!--for text editor-->	
+
 	<link rel="icon" type="image/png" href="images/fav-icon.png"/>
 	<link rel='stylesheet' href='css/style.min.css' />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -12,7 +20,123 @@
 	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 	<script src="js/calendar-min.js"></script>
 	<script src="js/calendar.js"></script>
-	
+
+	<!--=============================javascript for text editor==============================-->
+	<script type="text/javascript">
+		function ready(fn)
+		{
+				if( document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading" )
+						fn();
+				else
+						document.addEventListener( 'DOMContentLoaded', fn );
+		}
+		ready(function() {
+				// Buttons
+				var htmlparser = document.implementation.createHTMLDocument('');
+				htmlparser.body.innerHTML = '<button>Insert text</button>';
+				var customButton = htmlparser.body.firstChild;
+				// Buttons: https://material.io/tools/icons/
+				var buttons = [
+						// generic
+						customButton,
+						// open popup
+						{
+								icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M0 0h24v24H0z" fill="none"/><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"/></svg>',
+								popup: function( commands, popup, button ) {
+												var smilies = [ 'afraid.png','amorous.png','angel.png','angry.png','bored.png','cold.png','confused.png','cross.png','crying.png','devil.png','disappointed.png','dont-know.png','drool.png',
+																				'embarrassed.png','excited.png','excruciating.png','eyeroll.png','happy.png','hot.png','hug-left.png','hug-right.png','hungry.png','invincible.png','kiss.png','lying.png',
+																				'meeting.png','nerdy.png','neutral.png','party.png','pirate.png','pissed-off.png','question.png','sad.png','shame.png','shocked.png','shut-mouth.png','sick.png','silent.png',
+																				'sleeping.png','sleepy.png','stressed.png','thinking.png','tongue.png','uhm-yeah.png','wink.png','working.png','bathing.png','beer.png','boy.png','camera.png','chilli.png',
+																				'cigarette.png','cinema.png','coffee.png','girl.png','console.png','grumpy.png','in_love.png','internet.png','lamp.png','mobile.png','mrgreen.png','musical-note.png','music.png',
+																				'phone.png','plate.png','restroom.png','rose.png','search.png','shopping.png','star.png','studying.png','suit.png','surfing.png','thunder.png','tv.png','typing.png','writing.png' ];
+												smilies.forEach( function( filename )
+												{
+														var smiley = document.createElement('img');
+														smiley.src = 'smiley/' + filename;
+														smiley.width = 16;
+														smiley.height = 16;
+														smiley.style.cursor = 'pointer';
+														smiley.onclick = function( e ) {
+																e.preventDefault();
+																e.stopPropagation();
+																var smileyhtml = ' <img src="smiley/' + filename + '" width="16" height="16">&nbsp; ';
+																commands.insertHTML( smileyhtml ); // 'commands.insertHTML(...).closePopup()' - to close popup
+														};
+														popup.style.textAlign = 'center';
+														popup.style.width = '20em';
+														popup.style.padding = '0.5em';
+														popup.appendChild( smiley );
+														popup.appendChild( document.createTextNode(' ') );
+												});
+										},
+								attr: { // attributes
+										title: 'Smilies',
+								},
+						},
+						// simple buttons
+						{
+								icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg>',
+								action: 'link',
+								attr: { // attributes
+										title: 'Insert link',
+								},
+						},
+						
+				];
+		
+				var suggester = function( term, response )
+				{
+						// Suggestions start with '@'
+						if( term[0] != '@' )
+								return false;
+						// You may want to ask the server ...
+						var fill_suggestion = function()
+								{
+										var suggestions = [];
+										var usernames = ['Evelyn','Harry','Amelia','Oliver','Isabelle','Eddie','Editha','Jacob','Emily','George','Edison'];
+										usernames.forEach( function( username, index )
+										{
+												var re = new RegExp( '^(' + term.substring(1).replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')(.*)$', 'i' );
+												if( term == '@' || re.test(username) )
+												{
+														var codepoint = 0xF600 + index;
+														var fakeavatar = String.fromCharCode( ((codepoint >>>10) & 0x3FF) | 0xD800 ) +
+																						 String.fromCharCode( 0xDC00 | (codepoint & 0x3FF) );
+														suggestions.push({
+																label: fakeavatar + ' ' + (term != '@' ? username.replace(re,'$1<b>$2</b>') : username),
+																insert: '<a href="/' + username + '">@' + username + '</a>&nbsp;'
+														});
+												}
+										});
+										response( suggestions.length ? suggestions : null );  // null = close suggestions
+								};
+						// simulate: immediate, fast and slow internet
+						if( Math.random() < 0.5 )
+								fill_suggestion();
+						else
+								setTimeout( fill_suggestion, Math.random() > 0.9 ? 5000 : 100 );
+						return true;
+				};
+		
+				var interceptenter = function()
+				{
+						return false;
+				};
+		
+				var editor1_commands = wysiwyg( '#editor1', {
+						toolbar: 'top',
+						buttons: buttons.slice(1),
+						selectionbuttons: buttons.slice(2,3).concat( buttons.slice(4,13) ),
+						suggester: suggester,
+						interceptenter: interceptenter,
+						hijackmenu: true
+				});
+		
+		});
+		</script>
+		<!--=============================javascript for text editor==============================-->
+
+
 </head>
 <body>
 	<!-- navbar -->
@@ -60,7 +184,9 @@
 						<input name="date" placeholder="Ημερομηνία" type="date" tabindex="2" required >
 					  </fieldset>
 					  <fieldset>
-						<textarea name="content" placeholder="Κείμενο...." tabindex="3"  required ></textarea>
+								<div id="editor1" class="wysiwyg">
+								 <textarea name="editor" placeholder="Κείμενο...." tabindex="3"  required ></textarea>
+								</div>
 						</fieldset>
 						<fieldset>
 						 <input name="image" type="file" name="file-7[]" id="file-7" class="inputfile inputfile-6" data-multiple-caption="{count} files selected" multiple  />
